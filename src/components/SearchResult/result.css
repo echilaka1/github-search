@@ -20,25 +20,47 @@
   flex-wrap: wrap;
 }
 
+.box-content .box-flex {
+  padding: 5px;
+}
+
 .box-content img {
   width: 30%;
   border-radius: 50%;
   height: auto;
 }
 
-.details h3 {
+.details {
   font-size: 12px;
   font-weight: 500;
   margin-bottom: 10px;
 }
 
-.details h3 a {
+.details a {
   color: green;
   text-decoration: none;
 }
 
-.details h3 a span {
+.details a span {
   font-size: 10px;
+}
+
+.followers {
+  display: flex;
+  flex-wrap: wrap;
+  /* padding: 5px; */
+}
+
+.followers > div {
+  margin: 5px;
+}
+
+.followers h2 {
+  font-size: 12px;
+}
+
+.followers p {
+  font-size: 12px;
 }
 
 @media screen and (max-width: 700px) {
