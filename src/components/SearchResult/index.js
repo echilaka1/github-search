@@ -2,7 +2,7 @@ import React from "react";
 import "./result.css";
 
 export default function Users({ users }) {
-  console.log(users);
+  // console.log(users);
   return (
     <div className="users-list">
       <div className="container">
