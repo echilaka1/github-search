@@ -32,6 +32,12 @@ p {
   padding: 20px 0px;
   text-align: center;
   color: black;
-  font-size:14px;
+  font-size: 14px;
   font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.spinner {
+  padding: 100px 0;
+  text-align: center;
 }

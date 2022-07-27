@@ -1,0 +1,32 @@
+.users-list {
+  max-width: 900px;
+  margin: auto;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 0 0 30%;
+  justify-content: space-between;
+}
+
+.box {
+  background: #efefef;
+  border: 1px solid #fff;
+  width: 30%;
+  height: 150px;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 700px) {
+  .users-list {
+    padding: 10px;
+  }
+
+  .container {
+    flex-direction: column;
+  }
+  .box {
+    width: 100%;
+  }
+}

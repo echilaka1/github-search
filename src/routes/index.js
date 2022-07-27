@@ -6,7 +6,7 @@ const AllPages = () => (
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<Search />}>
-        <Route path=":name" element={<Search />} />
+        <Route path="search/:name" element={<Search />} />
       </Route>
     </Routes>
   </BrowserRouter>

@@ -1,13 +1,12 @@
 .input-class {
-    background: #ffffff;
-    border: 1px solid #d8e0e9;
-    border-radius: 6px;
-    /* max-width: 425.33px; */
-    height: 42px;
-    color: black;
-    width:100%;
-    font-size: 14px;
-    padding:10px;
-    margin-bottom:10px;
-  }
-  
+  background: #ffffff;
+  border: 1px solid #d8e0e9;
+  border-radius: 6px;
+  /* max-width: 425.33px; */
+  height: 42px;
+  color: black;
+  width: 100%;
+  font-size: 14px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
