@@ -1,7 +1,7 @@
 const baseURL = "https://api.github.com/search/users";
 
 const makeAPICall = async (
-  { method = null, params = null },
+  {  method = null, params = null },
   customConfigs
 ) => {
   const headers = {

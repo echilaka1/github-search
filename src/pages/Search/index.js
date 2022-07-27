@@ -19,7 +19,7 @@ export default function Search() {
     let params;
     const q1 = "+type:";
     let q = `${search}${q1}${searchType}`;
-    q = encodeURIComponent(q);
+    // q = encodeURIComponent(q);
     console.log(q, "hfhf");
     params = {
       q: searchType === "users" ? search : q,
