@@ -11,11 +11,34 @@
 }
 
 .box {
-  background: #efefef;
-  border: 1px solid #fff;
   width: 30%;
-  height: 150px;
-  margin-top: 20px;
+  margin-top: 30px;
+}
+
+.box-content {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.box-content img {
+  width: 30%;
+  border-radius: 50%;
+  height: auto;
+}
+
+.details h3 {
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.details h3 a {
+  color: green;
+  text-decoration: none;
+}
+
+.details h3 a span {
+  font-size: 10px;
 }
 
 @media screen and (max-width: 700px) {

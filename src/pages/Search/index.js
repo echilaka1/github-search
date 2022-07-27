@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavBar from "../../components/Navbar";
 import "./index.css";
 import InputField from "../../components/InputField";
 import Button from "../../components/Button";
 import Users from "../../components/SearchResult";
-import makeAPICall from "../../utils/apiUtils";
+import Pagination from "../../components/Pagination/Pagination";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+let PageSize = 50;
 
 export default function Search() {
   const navigate = useNavigate();
@@ -13,34 +16,67 @@ export default function Search() {
   const [search, setSearch] = useState("");
   const [searchType, setSearchType] = useState("");
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState();
 
   const handleSubmit = () => {
     setLoading(true);
-    let params;
     const q1 = "+type:";
     let q = `${search}${q1}${searchType}`;
-    // q = encodeURIComponent(q);
-    console.log(q, "hfhf");
-    params = {
-      q: searchType === "users" ? search : q,
-      per_page: 50,
-      page: 1,
-    };
-    return makeAPICall({
-      method: "GET",
-      params,
-    })
+    // q = encodeURIComponen
+    axios
+      .get("https://api.github.com/search/users", {
+        params: {
+          q: searchType === "users" ? search : q,
+          per_page: PageSize,
+          page: 1,
+        },
+      })
+
+      // Handle the response from backend here
       .then((res) => {
-        console.log(res);
         navigate(`search/${search}`);
-        setUsers(res);
+        setUsers(res.data);
+        setCurrentPage(1);
         setLoading(false);
       })
+
+      // Catch errors if any
       .catch((err) => {
         console.log(err);
-        setLoading(false);
       });
   };
+
+  useEffect(() => {
+    if (currentPage === undefined) {
+      setUsers();
+    } else {
+      setLoading(true);
+      const q1 = "+type:";
+      let q = `${search}${q1}${searchType}`;
+      // q = encodeURIComponen
+      axios
+        .get("https://api.github.com/search/users", {
+          params: {
+            q: searchType === "users" ? search : q,
+            per_page: PageSize,
+            page: currentPage,
+          },
+        })
+
+        // Handle the response from backend here
+        .then((res) => {
+          setUsers(res.data);
+          setLoading(false);
+        })
+
+        // Catch errors if any
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage]);
 
   return (
     <div>
@@ -53,7 +89,7 @@ export default function Search() {
             type="text"
             placeholder="Enter Search Keyword"
           />
-          <p>Search For</p>
+          <p className="radio-text">Search For</p>
           <div className="user-type-input">
             <div>
               <label>
@@ -100,7 +136,14 @@ export default function Search() {
                 </p>
               </div>
 
-              <Users users={users?.items} />
+              <Users users={users.items} />
+              <Pagination
+                className="pagination-bar"
+                currentPage={currentPage}
+                totalCount={users?.total_count}
+                pageSize={PageSize}
+                onPageChange={(page) => setCurrentPage(page)}
+              />
             </div>
           ) : users && !users?.items.length ? (
             <div className="users-list">
