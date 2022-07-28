@@ -59,7 +59,7 @@ export default function Search() {
         const params = {
           q: searchType === "users" ? search : q,
           per_page: PageSize,
-          page: 1,
+          page: currentPage,
         };
 
         return makeAPICall({
