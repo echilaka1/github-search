@@ -6,7 +6,7 @@ import Button from "../../components/Button";
 import Users from "../../components/SearchResult";
 import Pagination from "../../components/Pagination/Pagination";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import makeAPICall from "../../utils/apiUtils";
 
 let PageSize = 50;
 
@@ -24,24 +24,22 @@ export default function Search() {
     q1 = q1.replace(/\+/g, "%20");
     q1 = decodeURIComponent(q1);
     const q = `${search}${q1}${searchType}`;
-    axios
-      .get("https://api.github.com/search/users", {
-        params: {
-          q: searchType === "users" ? search : q,
-          per_page: PageSize,
-          page: 1,
-        },
-      })
-
-      // Handle the response from backend here
+    const params = {
+      q: searchType === "users" ? search : q,
+      per_page: PageSize,
+      page: 1,
+    };
+    return makeAPICall({
+      method: "GET",
+      params,
+    })
       .then((res) => {
+        // console.log(res)
         navigate(`search/${search}`);
-        setUsers(res.data);
+        setUsers(res);
         setCurrentPage(1);
         setLoading(false);
       })
-
-      // Catch errors if any
       .catch((err) => {
         console.log(err);
       });
@@ -56,22 +54,21 @@ export default function Search() {
       q1 = q1.replace(/\+/g, "%20");
       q1 = decodeURIComponent(q1);
       const q = `${search}${q1}${searchType}`;
-      axios
-        .get("https://api.github.com/search/users", {
-          params: {
-            q: searchType === "users" ? search : q,
-            per_page: PageSize,
-            page: currentPage,
-          },
-        })
 
-        // Handle the response from backend here
+      const params = {
+        q: searchType === "users" ? search : q,
+        per_page: PageSize,
+        page: 1,
+      };
+
+      return makeAPICall({
+        method: "GET",
+        params,
+      })
         .then((res) => {
-          setUsers(res.data);
+          setUsers(res);
           setLoading(false);
         })
-
-        // Catch errors if any
         .catch((err) => {
           console.log(err);
         });
