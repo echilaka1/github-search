@@ -20,9 +20,10 @@ export default function Search() {
 
   const handleSubmit = () => {
     setLoading(true);
-    const q1 = "+type:";
-    let q = `${search}${q1}${searchType}`;
-    // q = encodeURIComponen
+    let q1 = "+type:";
+    q1 = q1.replace(/\+/g, "%20");
+    q1 = decodeURIComponent(q1);
+    const q = `${search}${q1}${searchType}`;
     axios
       .get("https://api.github.com/search/users", {
         params: {
@@ -51,9 +52,10 @@ export default function Search() {
       setUsers();
     } else {
       setLoading(true);
-      const q1 = "+type:";
-      let q = `${search}${q1}${searchType}`;
-      // q = encodeURIComponen
+      let q1 = "+type:";
+      q1 = q1.replace(/\+/g, "%20");
+      q1 = decodeURIComponent(q1);
+      const q = `${search}${q1}${searchType}`;
       axios
         .get("https://api.github.com/search/users", {
           params: {
