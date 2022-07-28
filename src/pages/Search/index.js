@@ -49,29 +49,33 @@ export default function Search() {
     if (currentPage === undefined) {
       setUsers();
     } else {
-      setLoading(true);
-      let q1 = "+type:";
-      q1 = q1.replace(/\+/g, "%20");
-      q1 = decodeURIComponent(q1);
-      const q = `${search}${q1}${searchType}`;
+      async function fetchData() {
+        setLoading(true);
+        let q1 = "+type:";
+        q1 = q1.replace(/\+/g, "%20");
+        q1 = decodeURIComponent(q1);
+        const q = `${search}${q1}${searchType}`;
 
-      const params = {
-        q: searchType === "users" ? search : q,
-        per_page: PageSize,
-        page: 1,
-      };
+        const params = {
+          q: searchType === "users" ? search : q,
+          per_page: PageSize,
+          page: 1,
+        };
 
-      return makeAPICall({
-        method: "GET",
-        params,
-      })
-        .then((res) => {
-          setUsers(res);
-          setLoading(false);
+        return makeAPICall({
+          method: "GET",
+          params,
         })
-        .catch((err) => {
-          console.log(err);
-        });
+          .then((res) => {
+            setUsers(res);
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        // ...
+      }
+      fetchData();
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
