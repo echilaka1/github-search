@@ -9,6 +9,11 @@ import { useNavigate } from "react-router-dom";
 import makeAPICall from "../../utils/apiUtils";
 
 let PageSize = 50;
+let totalCount = 1000;
+
+let q1 = "+type:";
+q1 = q1.replace(/\+/g, "%20");
+q1 = decodeURIComponent(q1);
 
 export default function Search() {
   const navigate = useNavigate();
@@ -20,9 +25,6 @@ export default function Search() {
 
   const handleSubmit = () => {
     setLoading(true);
-    let q1 = "+type:";
-    q1 = q1.replace(/\+/g, "%20");
-    q1 = decodeURIComponent(q1);
     const q = `${search}${q1}${searchType}`;
     const params = {
       q: searchType === "users" ? search : q,
@@ -34,7 +36,6 @@ export default function Search() {
       params,
     })
       .then((res) => {
-        // console.log(res)
         navigate(`search/${search}`);
         setUsers(res);
         setCurrentPage(1);
@@ -51,9 +52,6 @@ export default function Search() {
     } else {
       async function fetchData() {
         setLoading(true);
-        let q1 = "+type:";
-        q1 = q1.replace(/\+/g, "%20");
-        q1 = decodeURIComponent(q1);
         const q = `${search}${q1}${searchType}`;
 
         const params = {
@@ -73,7 +71,6 @@ export default function Search() {
           .catch((err) => {
             console.log(err);
           });
-        // ...
       }
       fetchData();
     }
@@ -119,7 +116,7 @@ export default function Search() {
           <Button
             onClick={handleSubmit}
             type="button"
-            disabled={!(search && searchType)}
+            disabled={!(search.trim() && searchType)}
           >
             Search
           </Button>
@@ -143,7 +140,7 @@ export default function Search() {
               <Pagination
                 className="pagination-bar"
                 currentPage={currentPage}
-                totalCount={users?.total_count}
+                totalCount={users?.total_count > totalCount ? totalCount : users?.total_count}
                 pageSize={PageSize}
                 onPageChange={(page) => setCurrentPage(page)}
               />
